@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_10"
+    >
+
+    <toong.vn.bebetter.widget.GroupInputView
+        android:id="@+id/input_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:giv_title="@string/title"
+        app:giv_inputHint="@string/title_hint"
+        app:giv_rule="none_empty"
+        app:giv_input_size="@dimen/sp_18"
+        />
+
+</LinearLayout>

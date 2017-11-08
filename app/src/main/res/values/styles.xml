@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <declare-styleable name="GroupInputView">
+        <attr name="giv_title" format="string"/>
+        <attr name="giv_inputHint" format="string"/>
+        <attr name="giv_inputText" format="string"/>
+        <attr name="giv_inputType" format="string"/>
+        <attr name="giv_imeOptions" format="string"/>
+        <attr name="giv_rule" format="string"/>
+        <attr name="giv_input_maxLength" format="integer"/>
+        <attr name="giv_input_enable" format="boolean"/>
+        <attr name="giv_input_lines" format="integer"/>
+        <attr name="giv_input_size" format="dimension"/>
+    </declare-styleable>
+
+</resources>
