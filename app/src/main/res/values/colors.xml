@@ -3,4 +3,27 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <color name="color_white">#fff</color>
+
+    <color name="background_primary">#ffffff</color>
+    <color name="background_secondary">#ebebf1</color>
+
+    <color name="button_primary_bg">#14b04d</color>
+    <color name="button_primary_color">#ffffff</color>
+    <color name="button_draft_bg">#808182</color>
+    <color name="button_done_bg">#201364</color>
+
+    <color name="text_primary_color">#292b2c</color>
+    <color name="text_secondary_color">#a1abae</color>
+    <color name="text_accent_color">#14b04d</color>
+    <color name="text_link_color">#0e74c5</color>
+    <color name="text_prize_color">#ff3425</color>
+    <color name="text_prize_secondary_color">#999999</color>
+
+    <color name="screen_primary_color">#ffffff</color>
+
+    <color name="item_primary">#839094</color>
+    <color name="item_primary_selected">#839094</color>
 </resources>

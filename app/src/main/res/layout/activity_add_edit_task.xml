@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/dp_10"
+    android:orientation="vertical"
+    android:background="@color/background_primary"
     >
 
     <toong.vn.bebetter.widget.GroupInputView
@@ -16,6 +18,22 @@
         app:giv_inputHint="@string/title_hint"
         app:giv_rule="none_empty"
         app:giv_input_size="@dimen/sp_18"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/group"
+        android:layout_marginTop="@dimen/dp_15"
+        style="@style/TextTitle"
+        />
+
+    <toong.vn.bebetter.widget.item.ItemMenuView
+        android:id="@+id/item_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:im_title="A"
+        app:im_status="select"
         />
 
 </LinearLayout>

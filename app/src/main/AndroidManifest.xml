@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".screen.addedittask.AddEditTaskActivity">
         </activity>
+        <activity android:name=".screen.group.GroupActivity">
+        </activity>
     </application>
 
 </manifest>

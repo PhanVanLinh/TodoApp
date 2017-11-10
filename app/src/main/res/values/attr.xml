@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ImageButton">
+        <attr format="string" name="ib_title"/>
+        <attr format="color" name="ib_titleColor"/>
+        <attr format="dimension" name="ib_titleSize"/>
+        <attr format="reference" name="ib_leftDrawable"/>
+        <attr format="dimension" name="ib_drawableWidth"/>
+        <attr format="dimension" name="ib_drawableHeight"/>
+        <attr format="color" name="ib_backgroundColor"/>
+        <attr format="color" name="ib_disableBackgroundColor"/>
+        <attr format="color" name="ib_borderColor"/>
+        <attr format="dimension" name="ib_borderWidth"/>
+        <attr format="color" name="ib_disableBorderColor"/>
+        <attr format="dimension" name="ib_corner"/>
+    </declare-styleable>
+</resources>

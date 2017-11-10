@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@null</item>
     </style>
 
     <declare-styleable name="GroupInputView">
@@ -19,6 +20,19 @@
         <attr name="giv_input_enable" format="boolean"/>
         <attr name="giv_input_lines" format="integer"/>
         <attr name="giv_input_size" format="dimension"/>
+    </declare-styleable>
+
+    <style name="TextTitle">
+        <item name="android:textColor">@color/text_primary_color</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:paddingTop">@dimen/dp_5</item>
+        <item name="android:paddingBottom">@dimen/dp_5</item>
+    </style>
+
+    <declare-styleable name="ItemMenuViewStyle">
+        <attr name="im_title" format="string"/>
+        <attr name="im_status" format="string"/>
+        <attr name="im_image" format="reference"/>
     </declare-styleable>
 
 </resources>

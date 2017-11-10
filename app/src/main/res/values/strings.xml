@@ -4,11 +4,17 @@
 
     <!-- Base -->
     <string name="add">Add</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
     <!-- Add Task -->
     <string name="title">Title</string>
     <string name="title_hint">Please enter</string>
     <string name="description">Description</string>
+    <string name="content_description">ct</string>
+    <string name="group">Group</string>
+
+
 
 
 </resources>

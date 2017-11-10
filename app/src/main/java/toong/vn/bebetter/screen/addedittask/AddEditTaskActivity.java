@@ -18,7 +18,7 @@ public class AddEditTaskActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insert_task);
+        setContentView(R.layout.activity_add_edit_task);
 
         ipTitle = findViewById(R.id.input_title);
     }
@@ -59,7 +59,7 @@ public class AddEditTaskActivity extends BaseActivity {
             SingleToast.with(this).showShortToast("dad");
             return;
         }
-        Task task = new Task();
+        Task task = new Task(ipTitle.getText());
         task.setTitle(ipTitle.getText());
 
     }
