@@ -11,14 +11,23 @@ import android.view.View;
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener{
+    protected String TAG = getClass().getSimpleName();
     protected Navigator mNavigator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNavigator = new Navigator(this);
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        initUI();
         addListener();
     }
+
+    protected abstract void initUI();
 
     protected abstract void addListener();
 }

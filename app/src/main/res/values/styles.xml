@@ -9,6 +9,10 @@
         <item name="android:windowBackground">@null</item>
     </style>
 
+    <style name="ThemeNoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@null</item>
+    </style>
+
     <declare-styleable name="GroupInputView">
         <attr name="giv_title" format="string"/>
         <attr name="giv_inputHint" format="string"/>

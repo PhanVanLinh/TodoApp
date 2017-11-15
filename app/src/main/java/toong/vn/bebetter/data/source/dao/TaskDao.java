@@ -5,6 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import io.reactivex.Flowable;
 import java.util.List;
 import toong.vn.bebetter.data.model.Task;
 import toong.vn.bebetter.data.model.User;
@@ -18,6 +19,9 @@ import toong.vn.bebetter.data.model.User;
 public interface TaskDao {
     @Query("SELECT * FROM task")
     List<Task> getAll();
+
+    @Query("SELECT * FROM task LIMIT 2")
+    Flowable<List<Task>> getTask();
 
     @Query("SELECT * FROM task WHERE id IN (:userIds)")
     List<Task> loadAllByIds(int[] userIds);
