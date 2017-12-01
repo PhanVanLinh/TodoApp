@@ -11,17 +11,21 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".screen.home.HomeActivity"
-            android:theme="@style/ThemeNoActionBar"
-            >
+            android:theme="@style/ThemeNoActionBar">
+
+        </activity>
+        <activity android:name=".screen.addedittask.AddEditTaskActivity">
+        </activity>
+        <activity android:name=".screen.group.GroupActivity">
+        </activity>
+        <activity
+            android:name=".screen.main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".screen.addedittask.AddEditTaskActivity">
-        </activity>
-        <activity android:name=".screen.group.GroupActivity">
         </activity>
     </application>
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BeBetter</string>
+    <string name="app_name">Test application</string>
     <string name="msg_error_none_empty">Please enter</string>
 
     <!-- Base -->
@@ -13,8 +13,12 @@
     <string name="description">Description</string>
     <string name="content_description">ct</string>
     <string name="group">Group</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="action_settings">Settings</string>
 
 
 </resources>
