@@ -3,6 +3,7 @@ package toong.vn.bebetter.data.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+
 import com.google.common.base.Strings;
 
 /**
@@ -21,18 +22,11 @@ public class Task {
     @ColumnInfo(name = "description")
     private String description;
 
+    @ColumnInfo(name = "unit")
+    private String unit;
+
     @ColumnInfo(name = "target")
     private int target;
-
-    public Task(String title){
-        this.title = title;
-    }
-
-    public Task(String title, String description, Integer taskId) {
-        this.title = title;
-        this.description = description;
-        this.id = taskId;
-    }
 
     public String getTitle() {
         return title;
@@ -60,5 +54,13 @@ public class Task {
 
     public boolean isEmpty() {
         return Strings.isNullOrEmpty(title);
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getUnit() {
+        return unit;
     }
 }

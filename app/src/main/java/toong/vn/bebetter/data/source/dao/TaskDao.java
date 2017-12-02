@@ -3,10 +3,11 @@ package toong.vn.bebetter.data.source.dao;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
-import io.reactivex.Flowable;
+
 import java.util.List;
+
+import io.reactivex.Single;
 import toong.vn.bebetter.data.model.Task;
 import toong.vn.bebetter.data.model.User;
 
@@ -21,7 +22,7 @@ public interface TaskDao {
     List<Task> getAll();
 
     @Query("SELECT * FROM task LIMIT 2")
-    Flowable<List<Task>> getTask();
+    Single<List<Task>> getTask();
 
     @Query("SELECT * FROM task WHERE id IN (:userIds)")
     List<Task> loadAllByIds(int[] userIds);
@@ -34,7 +35,7 @@ public interface TaskDao {
      *
      * @param task the task to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insertTask(Task task);
 
     @Delete

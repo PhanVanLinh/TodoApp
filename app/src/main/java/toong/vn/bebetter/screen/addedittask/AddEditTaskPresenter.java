@@ -96,20 +96,20 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
     }
 
     private void createTask(String title, String description) {
-        Task newTask = new Task(title);
-        if (newTask.isEmpty()) {
-            mAddTaskView.showEmptyTaskError();
-        } else {
-            mTasksRepository.saveTask(newTask);
-            mAddTaskView.showTasksList();
-        }
+//        Task newTask = new Task(title);
+//        if (newTask.isEmpty()) {
+//            mAddTaskView.showEmptyTaskError();
+//        } else {
+//            mTasksRepository.saveTask(newTask);
+//            mAddTaskView.showTasksList();
+//        }
     }
 
     private void updateTask(String title, String description) {
-        if (isNewTask()) {
-            throw new RuntimeException("updateTask() was called but task is new.");
-        }
-        mTasksRepository.saveTask(new Task(title, description, mTaskId));
-        mAddTaskView.showTasksList(); // After an edit, go back to the list.
+//        if (isNewTask()) {
+//            throw new RuntimeException("updateTask() was called but task is new.");
+//        }
+//        mTasksRepository.saveTask(new Task(title, description, mTaskId));
+//        mAddTaskView.showTasksList(); // After an edit, go back to the list.
     }
 }

@@ -1,4 +1,4 @@
-package toong.vn.bebetter.screen.home.adapter;
+package toong.vn.bebetter.screen.alltask.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

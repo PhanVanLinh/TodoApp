@@ -5,17 +5,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+
+import java.util.List;
+
 import io.reactivex.Completable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.internal.operators.completable.CompletableFromAction;
 import io.reactivex.schedulers.Schedulers;
-import java.util.List;
 import toong.vn.bebetter.R;
 import toong.vn.bebetter.data.model.Task;
 import toong.vn.bebetter.data.source.database.AppDatabase;
 import toong.vn.bebetter.screen.BaseActivity;
-import toong.vn.bebetter.screen.home.adapter.TaskAdapter;
+import toong.vn.bebetter.screen.alltask.adapter.TaskAdapter;
 import toong.vn.bebetter.util.base.BaseRecyclerViewAdapter;
 
 public class HomeActivity extends BaseActivity {
@@ -28,8 +30,6 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mAppDatabase = AppDatabase.getInstance(HomeActivity.this);
-
-
 
 
         mTaskAdapter = new TaskAdapter(this, new BaseRecyclerViewAdapter.ItemClickListener() {
@@ -49,9 +49,6 @@ public class HomeActivity extends BaseActivity {
 //                mTaskAdapter.add(tasks);
 //                Log.i(TAG, "tasks size: " + tasks.size());
 //            }
-//        });
-        addTask(new Task("1", "2", 3)).subscribeOn(Schedulers.io()).subscribe();
-        addTask(new Task("1", "2", 3)).subscribeOn(Schedulers.io()).subscribe();
         getTask();
     }
 

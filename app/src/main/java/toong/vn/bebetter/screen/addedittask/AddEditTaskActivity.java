@@ -6,8 +6,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
 import toong.vn.bebetter.R;
-import toong.vn.bebetter.data.model.Task;
 import toong.vn.bebetter.screen.BaseActivity;
 import toong.vn.bebetter.util.SingleToast;
 import toong.vn.bebetter.widget.GroupInputView;
@@ -65,8 +65,6 @@ public class AddEditTaskActivity extends BaseActivity {
             SingleToast.with(this).showShortToast("dad");
             return;
         }
-        Task task = new Task(ipTitle.getText());
-        task.setTitle(ipTitle.getText());
 //        addTask(task).subscribe();
         Snackbar.make(findViewById(android.R.id.content), "Welcome To Main Activity",
                 Snackbar.LENGTH_LONG).show();
