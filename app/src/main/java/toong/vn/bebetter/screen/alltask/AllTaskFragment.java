@@ -2,6 +2,8 @@ package toong.vn.bebetter.screen.alltask;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,7 +24,6 @@ import toong.vn.bebetter.R;
 import toong.vn.bebetter.data.model.Task;
 import toong.vn.bebetter.data.source.database.AppDatabase;
 import toong.vn.bebetter.screen.alltask.adapter.TaskAdapter;
-import toong.vn.bebetter.util.base.BaseRecyclerViewAdapter;
 
 /**
  * Created by PhanVanLinh on 01/12/2017.
@@ -40,15 +41,24 @@ public class AllTaskFragment extends BaseFragment {
     private RecyclerView mRecyclerViewTask;
     private TaskAdapter mTaskAdapter;
     private AppDatabase mAppDatabase;
+    private FloatingActionButton mButtonAdd;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mAppDatabase = AppDatabase.getInstance(getActivity());
 
-        mTaskAdapter = new TaskAdapter(getActivity(), new BaseRecyclerViewAdapter
-                .ItemClickListener() {
+        mTaskAdapter = new TaskAdapter(getActivity(), new TaskAdapter.TaskListener() {
+            @Override
+            public void onAddClicked(int position) {
+
+            }
+
+            @Override
+            public void onMinusClicked(int position) {
+
+            }
+
             @Override
             public void onItemClick(View view, int position) {
 
@@ -66,27 +76,28 @@ public class AllTaskFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
 
-        Task task1 = new Task();
-        task1.setTitle("A");
-        task1.setDescription("");
+//        Task task1 = new Task();
+//        task1.setTitle("A");
+//        task1.setDescription("");
+//
+//        final Task task2 = new Task();
+//        task2.setTitle("B");
 
-        final Task task2 = new Task();
-        task2.setTitle("B");
+//        addTasks(task1,task2).subscribeOn(Schedulers.io()).subscribe(new Action() {
+//            @Override
+//            public void run() throws Exception {
+//                getTask();
+//            }
+//        });
 
-        addTasks(task1,task2).subscribeOn(Schedulers.io()).subscribe(new Action() {
-            @Override
-            public void run() throws Exception {
-                getTask();
-            }
-        });
-
+        getTask();
     }
 
     private Completable addTasks(final Task... task) {
         return new CompletableFromAction(new Action() {
             @Override
             public void run() throws Exception {
-                Log.i(TAG, "insert task");
+                Log.i(TAG, "insert task ");
                 mAppDatabase.taskDao().insertAll(task);
             }
         });
@@ -107,7 +118,7 @@ public class AllTaskFragment extends BaseFragment {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.float_fab:
+            case R.id.button_add:
                 mNavigator.startAddTaskActivity();
                 break;
         }
@@ -117,7 +128,11 @@ public class AllTaskFragment extends BaseFragment {
     protected void initUI(View rootView) {
         mRecyclerViewTask = rootView.findViewById(R.id.recycler_task);
         mRecyclerViewTask.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerViewTask.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         mRecyclerViewTask.setAdapter(mTaskAdapter);
+
+        mButtonAdd = rootView.findViewById(R.id.button_add);
+        mButtonAdd.setOnClickListener(this);
     }
 
     @Override

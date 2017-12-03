@@ -25,8 +25,8 @@ public class Task {
     @ColumnInfo(name = "unit")
     private String unit;
 
-    @ColumnInfo(name = "target")
-    private int target;
+    @ColumnInfo(name = "currentBestValue")
+    private double currentBestValue;
 
     public String getTitle() {
         return title;
@@ -44,12 +44,12 @@ public class Task {
         this.description = description;
     }
 
-    public int getTarget() {
-        return target;
+    public void setCurrentBestValue(double currentBestValue) {
+        this.currentBestValue = currentBestValue;
     }
 
-    public void setTarget(int target) {
-        this.target = target;
+    public double getCurrentBestValue() {
+        return currentBestValue;
     }
 
     public boolean isEmpty() {

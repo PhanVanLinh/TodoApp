@@ -20,6 +20,27 @@
         app:giv_input_size="@dimen/sp_18"
         />
 
+    <toong.vn.bebetter.widget.GroupInputView
+        android:id="@+id/input_unit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:giv_title="@string/unit"
+        app:giv_inputHint="@string/title_hint"
+        app:giv_rule="none_empty"
+        app:giv_input_size="@dimen/sp_18"
+        />
+
+    <toong.vn.bebetter.widget.GroupInputView
+        android:id="@+id/input_current_best_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:giv_title="@string/best_value"
+        app:giv_inputHint="@string/title_hint"
+        app:giv_rule="none_empty"
+        app:giv_input_size="@dimen/sp_18"
+        app:giv_inputType="number"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

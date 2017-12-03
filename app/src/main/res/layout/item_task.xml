@@ -1,24 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/dp_5"
+    android:orientation="vertical"
     tools:background="#fff"
     >
 
-    <TextView
-        android:id="@+id/text_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Title"
-        />
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_5"
+        >
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:lines="1"
+            android:textColor="@color/text_primary_color"
+            android:textSize="@dimen/sp_16"
+            tools:text="Title"
+            />
+
+        <ImageView
+            android:id="@+id/button_add"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:background="@drawable/bg_round_circle_accent"
+            android:contentDescription="@string/content_description"
+            android:padding="@dimen/dp_5"
+            android:src="@drawable/ic_vector_add"
+            android:tint="@color/colorAccent"
+            />
+
+        <ImageView
+            android:id="@+id/button_minus"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_5"
+            android:background="@drawable/bg_round_circle_grey"
+            android:contentDescription="@string/content_description"
+            android:padding="@dimen/dp_5"
+            android:src="@drawable/ic_vector_minus"
+            android:tint="@color/color_blue_grey"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_5"
+            android:text="Value"
+            android:textColor="@color/text_primary_color"
+            android:textSize="@dimen/sp_18"
+            />
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/text_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AA"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:text="+20"
+        android:textColor="#0f0"
         />
-
-</LinearLayout>
+</RelativeLayout>

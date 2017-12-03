@@ -21,7 +21,7 @@ public interface TaskDao {
     @Query("SELECT * FROM task")
     List<Task> getAll();
 
-    @Query("SELECT * FROM task LIMIT 2")
+    @Query("SELECT * FROM task")
     Single<List<Task>> getTask();
 
     @Query("SELECT * FROM task WHERE id IN (:userIds)")
@@ -36,7 +36,7 @@ public interface TaskDao {
      * @param task the task to be inserted.
      */
     @Insert
-    void insertTask(Task task);
+    long insertTask(Task task);
 
     @Delete
     void delete(User user);
