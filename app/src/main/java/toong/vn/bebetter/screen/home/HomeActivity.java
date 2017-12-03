@@ -18,7 +18,6 @@ import toong.vn.bebetter.data.model.Task;
 import toong.vn.bebetter.data.source.database.AppDatabase;
 import toong.vn.bebetter.screen.BaseActivity;
 import toong.vn.bebetter.screen.alltask.adapter.TaskAdapter;
-import toong.vn.bebetter.util.base.BaseRecyclerViewAdapter;
 
 public class HomeActivity extends BaseActivity {
     private RecyclerView mRecyclerViewTask;
@@ -32,12 +31,6 @@ public class HomeActivity extends BaseActivity {
         mAppDatabase = AppDatabase.getInstance(HomeActivity.this);
 
 
-        mTaskAdapter = new TaskAdapter(this, new BaseRecyclerViewAdapter.ItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-
-            }
-        });
     }
 
     @Override

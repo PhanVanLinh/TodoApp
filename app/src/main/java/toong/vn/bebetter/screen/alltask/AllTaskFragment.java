@@ -22,8 +22,11 @@ import io.reactivex.schedulers.Schedulers;
 import toong.vn.bebetter.BaseFragment;
 import toong.vn.bebetter.R;
 import toong.vn.bebetter.data.model.Task;
+import toong.vn.bebetter.data.model.TaskDisplay;
+import toong.vn.bebetter.data.model.TaskEntry;
 import toong.vn.bebetter.data.source.database.AppDatabase;
 import toong.vn.bebetter.screen.alltask.adapter.TaskAdapter;
+import toong.vn.bebetter.util.DateTimeUtil;
 
 /**
  * Created by PhanVanLinh on 01/12/2017.
@@ -50,13 +53,13 @@ public class AllTaskFragment extends BaseFragment {
 
         mTaskAdapter = new TaskAdapter(getActivity(), new TaskAdapter.TaskListener() {
             @Override
-            public void onAddClicked(int position) {
-
+            public void onAddClicked(TaskDisplay taskDisplay) {
+                handleTaskEntry(taskDisplay);
             }
 
             @Override
-            public void onMinusClicked(int position) {
-
+            public void onMinusClicked(TaskDisplay taskDisplay) {
+                handleTaskEntry(taskDisplay);
             }
 
             @Override
@@ -86,11 +89,11 @@ public class AllTaskFragment extends BaseFragment {
 //        addTasks(task1,task2).subscribeOn(Schedulers.io()).subscribe(new Action() {
 //            @Override
 //            public void run() throws Exception {
-//                getTask();
+//                getAllTask();
 //            }
 //        });
 
-        getTask();
+        getAllTask();
     }
 
     private Completable addTasks(final Task... task) {
@@ -103,16 +106,65 @@ public class AllTaskFragment extends BaseFragment {
         });
     }
 
-
-    private void getTask() {
-        mAppDatabase.taskDao().getTask().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers
-                .mainThread()).subscribe(new Consumer<List<Task>>() {
+    private void getAllTask() {
+        mAppDatabase.taskDao().getAll().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers
+                .mainThread()).subscribe(new Consumer<List<TaskDisplay>>() {
             @Override
-            public void accept(List<Task> taskList) throws Exception {
+            public void accept(List<TaskDisplay> taskList) throws Exception {
                 Log.i(TAG, "tasks size: " + taskList.size());
                 mTaskAdapter.set(taskList);
             }
         });
+    }
+
+    private Completable insertTaskEntry(final TaskEntry entryEntry) {
+        return new CompletableFromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                Log.i(TAG, "insert entryEntry ");
+                mAppDatabase.taskEntryDao().insertTaskEntry(entryEntry);
+            }
+        });
+    }
+
+    private Completable updateTaskEntry(final TaskEntry taskEntry) {
+        return new CompletableFromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                Log.i(TAG, "update entryEntry ");
+                mAppDatabase.taskEntryDao().update(taskEntry.getProgress(), taskEntry.getDate(),
+                        taskEntry.getTaskId());
+            }
+        });
+    }
+
+    private Completable deleteTaskEntry(final TaskEntry taskEntry) {
+        return new CompletableFromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                Log.i(TAG, "delete entryEntry ");
+                mAppDatabase.taskEntryDao().delete(taskEntry.getDate(), taskEntry.getTaskId());
+            }
+        });
+    }
+
+    private TaskEntry getTaskEntry(TaskDisplay taskDisplay) {
+        TaskEntry taskEntry = new TaskEntry();
+        taskEntry.setProgress(taskDisplay.getProgress());
+        taskEntry.setTaskId(taskDisplay.getId());
+        taskEntry.setDate(DateTimeUtil.getCurrentDateInString());
+        return taskEntry;
+    }
+
+    private void handleTaskEntry(TaskDisplay taskDisplay) {
+        TaskEntry taskEntry = getTaskEntry(taskDisplay);
+        if (taskDisplay.getProgress() == 1 || taskEntry.getProgress() == -1) {
+            insertTaskEntry(taskEntry).subscribeOn(Schedulers.io()).subscribe();
+        } else if (taskDisplay.getProgress() == 0) {
+            deleteTaskEntry(taskEntry).subscribeOn(Schedulers.io()).subscribe();
+        } else {
+            updateTaskEntry(taskEntry).subscribeOn(Schedulers.io()).subscribe();
+        }
     }
 
     @Override
@@ -128,7 +180,8 @@ public class AllTaskFragment extends BaseFragment {
     protected void initUI(View rootView) {
         mRecyclerViewTask = rootView.findViewById(R.id.recycler_task);
         mRecyclerViewTask.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerViewTask.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        mRecyclerViewTask.addItemDecoration(new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL));
         mRecyclerViewTask.setAdapter(mTaskAdapter);
 
         mButtonAdd = rootView.findViewById(R.id.button_add);

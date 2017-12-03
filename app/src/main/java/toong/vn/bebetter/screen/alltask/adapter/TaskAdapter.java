@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import toong.vn.bebetter.R;
-import toong.vn.bebetter.data.model.Task;
+import toong.vn.bebetter.data.model.TaskDisplay;
 import toong.vn.bebetter.util.base.BaseRecyclerViewAdapter;
 
 /**
@@ -17,11 +17,12 @@ import toong.vn.bebetter.util.base.BaseRecyclerViewAdapter;
  * phanvanlinh.94vn@gmail.com
  */
 
-public class TaskAdapter extends BaseRecyclerViewAdapter<Task> {
+public class TaskAdapter extends BaseRecyclerViewAdapter<TaskDisplay> {
     private TaskListener mTaskListener;
 
-    public TaskAdapter(@NonNull Context context, TaskListener mTaskListener) {
-        super(context, mTaskListener);
+    public TaskAdapter(@NonNull Context context, TaskListener taskListener) {
+        super(context, taskListener);
+        mTaskListener = taskListener;
     }
 
     @Override
@@ -32,23 +33,27 @@ public class TaskAdapter extends BaseRecyclerViewAdapter<Task> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Task task = getItem(position);
+        TaskDisplay task = getItem(position);
         if (holder instanceof ItemViewHolder) {
-            ((ItemViewHolder) holder).tvTitle.setText(task.getTitle());
+            ((ItemViewHolder) holder).bind(task);
         }
     }
 
     private static class ItemViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
+
         private TextView tvTitle;
+        private TextView tvProgress;
         private ImageView buttonAdd;
         private ImageView buttonMinus;
 
+        private TaskDisplay mTaskDisplay;
         private TaskListener mTaskListener;
 
         ItemViewHolder(View itemView, TaskListener taskListener) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.text_title);
+            tvProgress = itemView.findViewById(R.id.text_progress);
             buttonAdd = itemView.findViewById(R.id.button_add);
             buttonMinus = itemView.findViewById(R.id.button_minus);
             mTaskListener = taskListener;
@@ -56,17 +61,30 @@ public class TaskAdapter extends BaseRecyclerViewAdapter<Task> {
             buttonAdd.setOnClickListener(this);
             buttonMinus.setOnClickListener(this);
             itemView.setOnClickListener(this);
+        }
 
+        void bind(TaskDisplay taskDisplay) {
+            mTaskDisplay = taskDisplay;
+            tvTitle.setText(taskDisplay.getTitle());
+            bindProgress();
+        }
+
+        private void bindProgress() {
+            tvProgress.setText(mTaskDisplay.getDisplayProgress());
         }
 
         @Override
         public void onClick(View view) {
             if (view.getId() == R.id.button_add) {
-                mTaskListener.onAddClicked(getAdapterPosition());
+                mTaskDisplay.increaseProgress();
+                mTaskListener.onAddClicked(mTaskDisplay);
+                bindProgress();
                 return;
             }
             if (view.getId() == R.id.button_minus) {
-                mTaskListener.onMinusClicked(getAdapterPosition());
+                mTaskDisplay.decreaseProgress();
+                mTaskListener.onMinusClicked(mTaskDisplay);
+                bindProgress();
                 return;
             }
             mTaskListener.onItemClick(view, getAdapterPosition());
@@ -74,8 +92,8 @@ public class TaskAdapter extends BaseRecyclerViewAdapter<Task> {
     }
 
     public interface TaskListener extends ItemClickListener {
-        void onAddClicked(int position);
+        void onAddClicked(TaskDisplay taskDisplay);
 
-        void onMinusClicked(int position);
+        void onMinusClicked(TaskDisplay taskDisplay);
     }
 }

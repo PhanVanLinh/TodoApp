@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.reactivex.Single;
 import toong.vn.bebetter.data.model.Task;
+import toong.vn.bebetter.data.model.TaskDisplay;
 import toong.vn.bebetter.data.model.User;
 
 /**
@@ -18,8 +19,11 @@ import toong.vn.bebetter.data.model.User;
 
 @Dao
 public interface TaskDao {
-    @Query("SELECT * FROM task")
-    List<Task> getAll();
+//    @Query("SELECT task.*, taskEntry.progress FROM task INNER JOIN taskEntry ON task.id=taskEntry.id")
+//    Single<List<Task>> getAll(String date);
+
+    @Query("SELECT task.*, taskEntry.progress FROM task LEFT JOIN taskEntry ON task.id=taskEntry.taskId")
+    Single<List<TaskDisplay>> getAll();
 
     @Query("SELECT * FROM task")
     Single<List<Task>> getTask();
@@ -30,11 +34,6 @@ public interface TaskDao {
     @Insert
     void insertAll(Task... users);
 
-    /**
-     * Insert a task in the database. If the task already exists, replace it.
-     *
-     * @param task the task to be inserted.
-     */
     @Insert
     long insertTask(Task task);
 

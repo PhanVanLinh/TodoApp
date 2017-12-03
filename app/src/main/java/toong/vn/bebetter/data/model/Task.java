@@ -28,6 +28,14 @@ public class Task {
     @ColumnInfo(name = "currentBestValue")
     private double currentBestValue;
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
