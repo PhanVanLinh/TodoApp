@@ -13,6 +13,7 @@ public class Injection {
     public static TaskRepository provideTasksRepository(@NonNull Context context) {
         checkNotNull(context);
         AppDatabase database = AppDatabase.getInstance(context);
-        return TaskRepository.getInstance(TaskLocalDataSource.getInstance(database.taskDao()));
+        return TaskRepository.getInstance(
+                TaskLocalDataSource.getInstance(database.taskDao(), database.taskEntryDao()));
     }
 }

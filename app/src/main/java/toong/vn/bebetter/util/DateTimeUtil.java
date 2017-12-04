@@ -12,9 +12,19 @@ import java.util.Locale;
 public class DateTimeUtil {
     public static String DATE_TIME_DB_FORMAT = "MMM-dd-yyyy";
 
+    public static Calendar getToday(){
+        return Calendar.getInstance();
+    }
+
     public static String getCurrentDateInString() {
-        Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_DB_FORMAT, Locale.US);
-        return dateFormat.format(c.getTime());
+        return dateFormat.format(getToday().getTime());
+    }
+
+    public static String getYesterDateInString() {
+        Calendar today = getToday();
+        today.add(Calendar.DATE, -1);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_DB_FORMAT, Locale.US);
+        return dateFormat.format(today.getTime());
     }
 }

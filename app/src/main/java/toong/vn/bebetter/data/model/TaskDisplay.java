@@ -6,8 +6,9 @@ package toong.vn.bebetter.data.model;
  */
 
 public class TaskDisplay extends Task {
-
+    private double yesterdayProgress;
     private double progress;
+    private double bestProgress;
 
     public void increaseProgress() {
         progress++;
@@ -27,5 +28,21 @@ public class TaskDisplay extends Task {
 
     public String getDisplayProgress() {
         return "" + progress;
+    }
+
+    public double getYesterdayProgress() {
+        return yesterdayProgress;
+    }
+
+    public void setYesterdayProgress(double yesterdayProgress) {
+        this.yesterdayProgress = yesterdayProgress;
+    }
+
+    public double getBestProgress() {
+        return bestProgress;
+    }
+
+    public void setBestProgress(double bestProgress) {
+        this.bestProgress = bestProgress;
     }
 }

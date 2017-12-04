@@ -12,8 +12,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="@dimen/dp_5"
+        android:orientation="horizontal"
         >
 
         <TextView
@@ -25,6 +25,7 @@
             android:textColor="@color/text_primary_color"
             android:textSize="@dimen/sp_16"
             tools:text="Title"
+            android:textStyle="bold"
             />
 
         <ImageView
@@ -36,6 +37,7 @@
             android:padding="@dimen/dp_5"
             android:src="@drawable/ic_vector_add"
             android:tint="@color/colorAccent"
+            android:layout_gravity="center_vertical"
             />
 
         <ImageView
@@ -48,19 +50,42 @@
             android:padding="@dimen/dp_5"
             android:src="@drawable/ic_vector_minus"
             android:tint="@color/color_blue_grey"
-            />
-
-        <TextView
-            android:id="@+id/text_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/dp_5"
-            android:text="Value"
-            android:textColor="@color/text_primary_color"
-            android:textSize="@dimen/sp_18"
             />
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
 
+            >
+            <TextView
+                android:id="@+id/text_best_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="1"
+                android:textColor="@color/text_primary_color"
+                android:textSize="@dimen/sp_12"
+                />
+            <TextView
+                android:id="@+id/text_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Value"
+                android:textColor="@color/text_primary_color"
+                android:textSize="@dimen/sp_16"
+                />
+            <TextView
+                android:id="@+id/text_yesterday_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="1"
+                android:textColor="@color/text_primary_color"
+                android:textSize="@dimen/sp_12"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <TextView
@@ -69,6 +94,6 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="end"
         android:text="+20"
-        android:textColor="#0f0"
+        android:textColor="@color/color_green_500"
         />
 </RelativeLayout>

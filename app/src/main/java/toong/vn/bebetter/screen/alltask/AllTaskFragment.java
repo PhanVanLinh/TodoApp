@@ -10,20 +10,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.List;
-
 import io.reactivex.Completable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.SingleSource;
 import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.internal.operators.completable.CompletableFromAction;
 import io.reactivex.schedulers.Schedulers;
+import java.util.List;
 import toong.vn.bebetter.BaseFragment;
 import toong.vn.bebetter.R;
+import toong.vn.bebetter.data.Injection;
 import toong.vn.bebetter.data.model.Task;
 import toong.vn.bebetter.data.model.TaskDisplay;
 import toong.vn.bebetter.data.model.TaskEntry;
+import toong.vn.bebetter.data.source.TaskRepository;
 import toong.vn.bebetter.data.source.database.AppDatabase;
 import toong.vn.bebetter.screen.alltask.adapter.TaskAdapter;
 import toong.vn.bebetter.util.DateTimeUtil;
@@ -46,10 +47,13 @@ public class AllTaskFragment extends BaseFragment {
     private AppDatabase mAppDatabase;
     private FloatingActionButton mButtonAdd;
 
+    private TaskRepository mTaskRepository;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAppDatabase = AppDatabase.getInstance(getActivity());
+        mTaskRepository = Injection.provideTasksRepository(getActivity());
 
         mTaskAdapter = new TaskAdapter(getActivity(), new TaskAdapter.TaskListener() {
             @Override
@@ -70,7 +74,7 @@ public class AllTaskFragment extends BaseFragment {
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_all_task, null, false);
         return rootView;
     }
@@ -79,19 +83,19 @@ public class AllTaskFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
 
-//        Task task1 = new Task();
-//        task1.setTitle("A");
-//        task1.setDescription("");
-//
-//        final Task task2 = new Task();
-//        task2.setTitle("B");
+        //        Task task1 = new Task();
+        //        task1.setTitle("A");
+        //        task1.setDescription("");
+        //
+        //        final Task task2 = new Task();
+        //        task2.setTitle("B");
 
-//        addTasks(task1,task2).subscribeOn(Schedulers.io()).subscribe(new Action() {
-//            @Override
-//            public void run() throws Exception {
-//                getAllTask();
-//            }
-//        });
+        //        addTasks(task1,task2).subscribeOn(Schedulers.io()).subscribe(new Action() {
+        //            @Override
+        //            public void run() throws Exception {
+        //                getAllTask();
+        //            }
+        //        });
 
         getAllTask();
     }
@@ -107,14 +111,51 @@ public class AllTaskFragment extends BaseFragment {
     }
 
     private void getAllTask() {
-        mAppDatabase.taskDao().getAll().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers
-                .mainThread()).subscribe(new Consumer<List<TaskDisplay>>() {
-            @Override
-            public void accept(List<TaskDisplay> taskList) throws Exception {
-                Log.i(TAG, "tasks size: " + taskList.size());
-                mTaskAdapter.set(taskList);
-            }
-        });
+
+        mAppDatabase.taskDao()
+                .getAll(DateTimeUtil.getCurrentDateInString())
+                .flatMap(new Function<List<TaskDisplay>, SingleSource<?>>() {
+                    @Override
+                    public SingleSource<?> apply(List<TaskDisplay> taskDisplayList)
+                            throws Exception {
+                        for (TaskDisplay taskDisplay : taskDisplayList) {
+
+                            //
+                            //                    Single.zip(mTaskRepository.getBestProgressOf(taskDisplay.getId()), mTaskRepository.getBestProgressOf(taskDisplay.getId())).subscribe(
+                            //                            new Consumer<Object>() {
+                            //                            })
+
+                            //                    mAppDatabase.taskEntryDao().getBestProgressOf(taskDisplay.getId())
+                        }
+                        return null;
+                    }
+                });
+
+        //        mAppDatabase.taskDao()
+        //                .getAll(DateTimeUtil.getCurrentDateInString())
+        //                .flatMap(new Function<List<TaskDisplay>, SingleSource<?>>() {
+        //                    @Override
+        //                    public SingleSource<?> apply(List<TaskDisplay> taskDisplays) throws Exception {
+        //                        return null;
+        //                    }
+        //                })
+        //                .subscribeOn(Schedulers.io())
+        //                .observeOn(AndroidSchedulers.mainThread())
+        //                .subscribe(new Consumer<List<TaskDisplay>>() {
+        //                    @Override
+        //                    public void accept(List<TaskDisplay> taskList) throws Exception {
+        //                        Log.i(TAG, "tasks size: " + taskList.size());
+        //                        mTaskAdapter.set(taskList);
+        //                    }
+        //                });
+    }
+
+    public Observable<String> getData1() {
+        return Observable.just("a");
+    }
+
+    public Observable<String> getData2() {
+        return Observable.just("b");
     }
 
     private Completable insertTaskEntry(final TaskEntry entryEntry) {
@@ -132,8 +173,9 @@ public class AllTaskFragment extends BaseFragment {
             @Override
             public void run() throws Exception {
                 Log.i(TAG, "update entryEntry ");
-                mAppDatabase.taskEntryDao().update(taskEntry.getProgress(), taskEntry.getDate(),
-                        taskEntry.getTaskId());
+                mAppDatabase.taskEntryDao()
+                        .update(taskEntry.getProgress(), taskEntry.getDate(),
+                                taskEntry.getTaskId());
             }
         });
     }
@@ -180,8 +222,8 @@ public class AllTaskFragment extends BaseFragment {
     protected void initUI(View rootView) {
         mRecyclerViewTask = rootView.findViewById(R.id.recycler_task);
         mRecyclerViewTask.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerViewTask.addItemDecoration(new DividerItemDecoration(getActivity(),
-                DividerItemDecoration.VERTICAL));
+        mRecyclerViewTask.addItemDecoration(
+                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         mRecyclerViewTask.setAdapter(mTaskAdapter);
 
         mButtonAdd = rootView.findViewById(R.id.button_add);

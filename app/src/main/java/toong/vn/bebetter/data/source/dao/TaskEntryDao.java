@@ -22,4 +22,10 @@ public interface TaskEntryDao {
 
     @Query("DELETE FROM taskEntry WhERE date = :date AND taskId = :taskId")
     void delete(String date, int taskId);
+
+    @Query("SELECT MAX(progress) FROM taskEntry WHERE taskId=:taskId")
+    double getBestProgressOf(int taskId);
+
+    @Query("SELECT progress FROM taskEntry WHERE taskId=:taskId and date=:yesterday")
+    double getYesterdayProgressOf(int taskId, String yesterday);
 }

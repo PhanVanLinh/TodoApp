@@ -19,11 +19,9 @@ import toong.vn.bebetter.data.model.User;
 
 @Dao
 public interface TaskDao {
-//    @Query("SELECT task.*, taskEntry.progress FROM task INNER JOIN taskEntry ON task.id=taskEntry.id")
-//    Single<List<Task>> getAll(String date);
 
-    @Query("SELECT task.*, taskEntry.progress FROM task LEFT JOIN taskEntry ON task.id=taskEntry.taskId")
-    Single<List<TaskDisplay>> getAll();
+    @Query("SELECT task.*, taskEntry.progress as progress FROM task LEFT JOIN taskEntry ON task.id=taskEntry.taskId and taskEntry.date=:today")
+    Single<List<TaskDisplay>> getAll(String today);
 
     @Query("SELECT * FROM task")
     Single<List<Task>> getTask();

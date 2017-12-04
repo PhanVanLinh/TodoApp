@@ -1,6 +1,7 @@
 package toong.vn.bebetter.data.source;
 
 import android.support.annotation.NonNull;
+import io.reactivex.Single;
 import toong.vn.bebetter.data.model.Task;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -37,5 +38,15 @@ public class TaskRepository implements TaskDataSource {
     @Override
     public void getTask(@NonNull Integer taskId, @NonNull GetTaskCallback callback) {
 
+    }
+
+    @Override
+    public Single<Double> getBestProgressOf(int taskId) {
+        return mTaskLocalDataSource.getBestProgressOf(taskId);
+    }
+
+    @Override
+    public Single<Double> getYesterdayProgressOf(int taskId) {
+        return mTaskLocalDataSource.getYesterdayProgressOf(taskId);
     }
 }

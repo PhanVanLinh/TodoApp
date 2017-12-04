@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/BeBetter.iml" filepath="$PROJECT_DIR$/BeBetter.iml" />
       <module fileurl="file://D:\PhanVanLinh\BeBetter\TodoApp-master\BeBetter.iml" filepath="D:\PhanVanLinh\BeBetter\TodoApp-master\BeBetter.iml" />
       <module fileurl="file://$PROJECT_DIR$/TodoApp-master.iml" filepath="$PROJECT_DIR$/TodoApp-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
