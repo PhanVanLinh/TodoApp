@@ -4,10 +4,9 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-
-import java.util.List;
-
+import io.reactivex.Maybe;
 import io.reactivex.Single;
+import java.util.List;
 import toong.vn.bebetter.data.model.Task;
 import toong.vn.bebetter.data.model.TaskDisplay;
 import toong.vn.bebetter.data.model.User;
@@ -21,7 +20,7 @@ import toong.vn.bebetter.data.model.User;
 public interface TaskDao {
 
     @Query("SELECT task.*, taskEntry.progress as progress FROM task LEFT JOIN taskEntry ON task.id=taskEntry.taskId and taskEntry.date=:today")
-    Single<List<TaskDisplay>> getAll(String today);
+    Maybe<List<TaskDisplay>> getAll(String today);
 
     @Query("SELECT * FROM task")
     Single<List<Task>> getTask();

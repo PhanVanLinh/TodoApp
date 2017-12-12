@@ -11,10 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import io.reactivex.Completable;
-import io.reactivex.Observable;
-import io.reactivex.SingleSource;
+import io.reactivex.MaybeObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
-import io.reactivex.functions.Function;
 import io.reactivex.internal.operators.completable.CompletableFromAction;
 import io.reactivex.schedulers.Schedulers;
 import java.util.List;
@@ -111,51 +111,31 @@ public class AllTaskFragment extends BaseFragment {
     }
 
     private void getAllTask() {
-
-        mAppDatabase.taskDao()
-                .getAll(DateTimeUtil.getCurrentDateInString())
-                .flatMap(new Function<List<TaskDisplay>, SingleSource<?>>() {
+        mTaskRepository.getAllTask()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new MaybeObserver<List<TaskDisplay>>() {
                     @Override
-                    public SingleSource<?> apply(List<TaskDisplay> taskDisplayList)
-                            throws Exception {
-                        for (TaskDisplay taskDisplay : taskDisplayList) {
+                    public void onSubscribe(Disposable d) {
 
-                            //
-                            //                    Single.zip(mTaskRepository.getBestProgressOf(taskDisplay.getId()), mTaskRepository.getBestProgressOf(taskDisplay.getId())).subscribe(
-                            //                            new Consumer<Object>() {
-                            //                            })
+                    }
 
-                            //                    mAppDatabase.taskEntryDao().getBestProgressOf(taskDisplay.getId())
-                        }
-                        return null;
+                    @Override
+                    public void onSuccess(List<TaskDisplay> taskDisplays) {
+                        mTaskAdapter.add(taskDisplays);
+                        mTaskAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: ", e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.e(TAG, "onComplete");
                     }
                 });
-
-        //        mAppDatabase.taskDao()
-        //                .getAll(DateTimeUtil.getCurrentDateInString())
-        //                .flatMap(new Function<List<TaskDisplay>, SingleSource<?>>() {
-        //                    @Override
-        //                    public SingleSource<?> apply(List<TaskDisplay> taskDisplays) throws Exception {
-        //                        return null;
-        //                    }
-        //                })
-        //                .subscribeOn(Schedulers.io())
-        //                .observeOn(AndroidSchedulers.mainThread())
-        //                .subscribe(new Consumer<List<TaskDisplay>>() {
-        //                    @Override
-        //                    public void accept(List<TaskDisplay> taskList) throws Exception {
-        //                        Log.i(TAG, "tasks size: " + taskList.size());
-        //                        mTaskAdapter.set(taskList);
-        //                    }
-        //                });
-    }
-
-    public Observable<String> getData1() {
-        return Observable.just("a");
-    }
-
-    public Observable<String> getData2() {
-        return Observable.just("b");
     }
 
     private Completable insertTaskEntry(final TaskEntry entryEntry) {
@@ -194,7 +174,7 @@ public class AllTaskFragment extends BaseFragment {
         TaskEntry taskEntry = new TaskEntry();
         taskEntry.setProgress(taskDisplay.getProgress());
         taskEntry.setTaskId(taskDisplay.getId());
-        taskEntry.setDate(DateTimeUtil.getCurrentDateInString());
+        taskEntry.setDate(DateTimeUtil.getTodayInString());
         return taskEntry;
     }
 

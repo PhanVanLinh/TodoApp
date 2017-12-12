@@ -1,13 +1,19 @@
 package toong.vn.bebetter.data.model;
 
+import android.arch.persistence.room.Ignore;
+
 /**
  * Created by PhanVanLinh on 12/3/2017.
  * phanvanlinh.94vn@gmail.com
  */
 
 public class TaskDisplay extends Task {
-    private double yesterdayProgress;
     private double progress;
+
+    @Ignore
+    private double yesterdayProgress;
+
+    @Ignore
     private double bestProgress;
 
     public void increaseProgress() {

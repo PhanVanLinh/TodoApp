@@ -1,9 +1,10 @@
 package toong.vn.bebetter.data.source;
 
 import android.support.annotation.NonNull;
-import io.reactivex.Single;
+import io.reactivex.Maybe;
 import java.util.List;
 import toong.vn.bebetter.data.model.Task;
+import toong.vn.bebetter.data.model.TaskDisplay;
 
 public interface TaskDataSource {
     interface LoadTasksCallback {
@@ -25,9 +26,11 @@ public interface TaskDataSource {
 
     void getTask(@NonNull Integer taskId, @NonNull GetTaskCallback callback);
 
-    Single<Double> getBestProgressOf(int taskId);
+    Maybe<List<TaskDisplay>> getAllTask();
 
-    Single<Double> getYesterdayProgressOf(int taskId);
+    Maybe<Double> getBestProgressOf(int taskId);
+
+    Maybe<Double> getYesterdayProgressOf(int taskId);
 
 //
 //    void saveTask(@NonNull Task task);

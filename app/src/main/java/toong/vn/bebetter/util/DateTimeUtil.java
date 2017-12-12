@@ -16,12 +16,12 @@ public class DateTimeUtil {
         return Calendar.getInstance();
     }
 
-    public static String getCurrentDateInString() {
+    public static String getTodayInString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_DB_FORMAT, Locale.US);
         return dateFormat.format(getToday().getTime());
     }
 
-    public static String getYesterDateInString() {
+    public static String getYesterdayInString() {
         Calendar today = getToday();
         today.add(Calendar.DATE, -1);
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_DB_FORMAT, Locale.US);

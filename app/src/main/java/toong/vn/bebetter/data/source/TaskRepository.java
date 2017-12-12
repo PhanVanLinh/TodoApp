@@ -1,8 +1,14 @@
 package toong.vn.bebetter.data.source;
 
 import android.support.annotation.NonNull;
-import io.reactivex.Single;
+import io.reactivex.Maybe;
+import io.reactivex.MaybeSource;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
+import java.util.ArrayList;
+import java.util.List;
 import toong.vn.bebetter.data.model.Task;
+import toong.vn.bebetter.data.model.TaskDisplay;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -41,12 +47,49 @@ public class TaskRepository implements TaskDataSource {
     }
 
     @Override
-    public Single<Double> getBestProgressOf(int taskId) {
+    public Maybe<List<TaskDisplay>> getAllTask() {
+        return mTaskLocalDataSource.getAllTask()
+                .flatMap(new Function<List<TaskDisplay>, MaybeSource<List<TaskDisplay>>>() {
+                    @Override
+                    public MaybeSource<List<TaskDisplay>> apply(List<TaskDisplay> taskDisplays)
+                            throws Exception {
+                        return get(taskDisplays);
+                    }
+                });
+    }
+
+    private Maybe<List<TaskDisplay>> get(final List<TaskDisplay> taskDisplays) {
+        List<MaybeSource<Object>> maybeList = new ArrayList<>();
+        for (final TaskDisplay taskDisplay : taskDisplays) {
+
+            MaybeSource<Object> s = getYesterdayProgressOf(taskDisplay.getId()).zipWith(
+                    getBestProgressOf(taskDisplay.getId()),
+                    new BiFunction<Double, Double, Object>() {
+                        @Override
+                        public Object apply(Double aDouble, Double aDouble2) throws Exception {
+                            taskDisplay.setYesterdayProgress(aDouble);
+                            taskDisplay.setBestProgress(aDouble2);
+                            return null;
+                        }
+                    });
+            maybeList.add(s);
+        }
+
+        return Maybe.zip(maybeList, new Function<Object[], List<TaskDisplay>>() {
+            @Override
+            public List<TaskDisplay> apply(Object[] objects) throws Exception {
+                return taskDisplays;
+            }
+        });
+    }
+
+    @Override
+    public Maybe<Double> getBestProgressOf(int taskId) {
         return mTaskLocalDataSource.getBestProgressOf(taskId);
     }
 
     @Override
-    public Single<Double> getYesterdayProgressOf(int taskId) {
+    public Maybe<Double> getYesterdayProgressOf(int taskId) {
         return mTaskLocalDataSource.getYesterdayProgressOf(taskId);
     }
 }

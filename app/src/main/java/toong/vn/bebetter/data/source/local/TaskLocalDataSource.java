@@ -1,10 +1,10 @@
 package toong.vn.bebetter.data.source.local;
 
 import android.support.annotation.NonNull;
-import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
-import io.reactivex.SingleOnSubscribe;
+import io.reactivex.Maybe;
+import java.util.List;
 import toong.vn.bebetter.data.model.Task;
+import toong.vn.bebetter.data.model.TaskDisplay;
 import toong.vn.bebetter.data.source.TaskDataSource;
 import toong.vn.bebetter.data.source.dao.TaskDao;
 import toong.vn.bebetter.data.source.dao.TaskEntryDao;
@@ -20,16 +20,17 @@ public class TaskLocalDataSource implements TaskDataSource {
     private TaskDao mTaskDao;
     private TaskEntryDao mTaskEntryDao;
 
-    private TaskLocalDataSource(@NonNull TaskDao TaskDao) {
-        mTaskDao = TaskDao;
+    private TaskLocalDataSource(@NonNull TaskDao taskDao, @NonNull TaskEntryDao taskEntryDao) {
+        mTaskDao = taskDao;
+        mTaskEntryDao = taskEntryDao;
     }
 
-    public static TaskLocalDataSource getInstance(@NonNull TaskDao TaskDao,
+    public static TaskLocalDataSource getInstance(@NonNull TaskDao taskDao,
             @NonNull TaskEntryDao taskEntryDao) {
         if (INSTANCE == null) {
             synchronized (TaskLocalDataSource.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new TaskLocalDataSource(TaskDao);
+                    INSTANCE = new TaskLocalDataSource(taskDao, taskEntryDao);
                 }
             }
         }
@@ -47,23 +48,17 @@ public class TaskLocalDataSource implements TaskDataSource {
     }
 
     @Override
-    public Single<Double> getBestProgressOf(final int taskId) {
-        return Single.create(new SingleOnSubscribe<Double>() {
-            @Override
-            public void subscribe(SingleEmitter<Double> e) throws Exception {
-                e.onSuccess(mTaskEntryDao.getBestProgressOf(taskId));
-            }
-        });
+    public Maybe<List<TaskDisplay>> getAllTask() {
+        return mTaskDao.getAll(DateTimeUtil.getTodayInString());
     }
 
     @Override
-    public Single<Double> getYesterdayProgressOf(final int taskId) {
-        return Single.create(new SingleOnSubscribe<Double>() {
-            @Override
-            public void subscribe(SingleEmitter<Double> e) throws Exception {
-                e.onSuccess(mTaskEntryDao.getYesterdayProgressOf(taskId,
-                        DateTimeUtil.getYesterDateInString()));
-            }
-        });
+    public Maybe<Double> getBestProgressOf(final int taskId) {
+        return mTaskEntryDao.getBestProgressOf(taskId);
+    }
+
+    @Override
+    public Maybe<Double> getYesterdayProgressOf(final int taskId) {
+        return mTaskEntryDao.getYesterdayProgressOf(taskId, DateTimeUtil.getYesterdayInString());
     }
 }

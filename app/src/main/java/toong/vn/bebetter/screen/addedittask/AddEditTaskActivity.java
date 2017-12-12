@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
@@ -86,9 +85,9 @@ public class AddEditTaskActivity extends BaseActivity {
         addTask(task).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action() {
             @Override
             public void run() throws Exception {
-                finish();
                 Snackbar.make(findViewById(android.R.id.content), "Welcome To Main Activity",
                         Snackbar.LENGTH_LONG).show();
+                finish();
             }
         });
     }
