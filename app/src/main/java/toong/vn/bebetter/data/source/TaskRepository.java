@@ -62,14 +62,14 @@ public class TaskRepository implements TaskDataSource {
         List<MaybeSource<Object>> maybeList = new ArrayList<>();
         for (final TaskDisplay taskDisplay : taskDisplays) {
 
-            MaybeSource<Object> s = getYesterdayProgressOf(taskDisplay.getId()).zipWith(
+            MaybeSource<Object> s = getPreviousProgressOf(taskDisplay.getId()).zipWith(
                     getBestProgressOf(taskDisplay.getId()),
                     new BiFunction<Double, Double, Object>() {
                         @Override
                         public Object apply(Double aDouble, Double aDouble2) throws Exception {
-                            taskDisplay.setYesterdayProgress(aDouble);
+                            taskDisplay.setPreviousProgress(aDouble);
                             taskDisplay.setBestProgress(aDouble2);
-                            return null;
+                            return aDouble; // can return any value, cannot return null because it will throws exceptions
                         }
                     });
             maybeList.add(s);
@@ -89,7 +89,7 @@ public class TaskRepository implements TaskDataSource {
     }
 
     @Override
-    public Maybe<Double> getYesterdayProgressOf(int taskId) {
-        return mTaskLocalDataSource.getYesterdayProgressOf(taskId);
+    public Maybe<Double> getPreviousProgressOf(int taskId) {
+        return mTaskLocalDataSource.getPreviousProgressOf(taskId);
     }
 }

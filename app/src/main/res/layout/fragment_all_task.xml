@@ -14,10 +14,43 @@
         android:layout_height="wrap_content"
         >
 
+        <LinearLayout
+            android:id="@+id/layout_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/image_previous"
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="@dimen/dp_44"
+                app:srcCompat="@drawable/ic_vector_chevron_left"
+                />
+
+            <TextView
+                android:id="@+id/text_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                tools:text="Time"
+                />
+            <ImageView
+                android:id="@+id/image_next"
+                android:layout_width="@dimen/dp_44"
+                android:layout_height="@dimen/dp_44"
+                app:srcCompat="@drawable/ic_vector_chevron_right"
+                />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/text_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/layout_top"
             android:text="AA"
             />
 
@@ -57,12 +90,12 @@
         </LinearLayout>
 
         <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/layout_progress_value"
             android:progress="80"
             android:progressDrawable="@drawable/bg_progress"
+            style="?android:attr/progressBarStyleHorizontal"
             />
 
     </RelativeLayout>

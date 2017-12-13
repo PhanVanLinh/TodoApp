@@ -2,6 +2,8 @@ package toong.vn.bebetter.data.source.local;
 
 import android.support.annotation.NonNull;
 import io.reactivex.Maybe;
+import io.reactivex.MaybeEmitter;
+import io.reactivex.MaybeOnSubscribe;
 import java.util.List;
 import toong.vn.bebetter.data.model.Task;
 import toong.vn.bebetter.data.model.TaskDisplay;
@@ -54,11 +56,22 @@ public class TaskLocalDataSource implements TaskDataSource {
 
     @Override
     public Maybe<Double> getBestProgressOf(final int taskId) {
-        return mTaskEntryDao.getBestProgressOf(taskId);
+        return Maybe.create(new MaybeOnSubscribe<Double>() {
+            @Override
+            public void subscribe(MaybeEmitter<Double> e) throws Exception {
+                e.onSuccess(mTaskEntryDao.getBestProgressOf(taskId));
+            }
+        });
     }
 
     @Override
-    public Maybe<Double> getYesterdayProgressOf(final int taskId) {
-        return mTaskEntryDao.getYesterdayProgressOf(taskId, DateTimeUtil.getYesterdayInString());
+    public Maybe<Double> getPreviousProgressOf(final int taskId) {
+        return Maybe.create(new MaybeOnSubscribe<Double>() {
+            @Override
+            public void subscribe(MaybeEmitter<Double> e) throws Exception {
+                e.onSuccess(mTaskEntryDao.getYesterdayProgressOf(taskId,
+                        DateTimeUtil.getYesterdayInString()));
+            }
+        });
     }
 }

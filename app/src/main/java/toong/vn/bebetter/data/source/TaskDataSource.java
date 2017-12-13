@@ -30,7 +30,7 @@ public interface TaskDataSource {
 
     Maybe<Double> getBestProgressOf(int taskId);
 
-    Maybe<Double> getYesterdayProgressOf(int taskId);
+    Maybe<Double> getPreviousProgressOf(int taskId);
 
 //
 //    void saveTask(@NonNull Task task);

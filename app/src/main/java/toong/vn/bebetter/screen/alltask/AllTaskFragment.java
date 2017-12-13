@@ -8,8 +8,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import io.reactivex.Completable;
 import io.reactivex.MaybeObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -49,9 +54,14 @@ public class AllTaskFragment extends BaseFragment {
 
     private TaskRepository mTaskRepository;
 
+    private TextView textTime;
+    private ImageView imagePrevious;
+    private ImageView imageNext;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mAppDatabase = AppDatabase.getInstance(getActivity());
         mTaskRepository = Injection.provideTasksRepository(getActivity());
 
@@ -76,6 +86,7 @@ public class AllTaskFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_all_task, null, false);
+        textTime.setText(DateTimeUtil.getTodayInString());
         return rootView;
     }
 
@@ -98,6 +109,23 @@ public class AllTaskFragment extends BaseFragment {
         //        });
 
         getAllTask();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_all_task, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.text_time:
+                return false;
+            default:
+                break;
+        }
+        return false;
     }
 
     private Completable addTasks(final Task... task) {
@@ -195,11 +223,19 @@ public class AllTaskFragment extends BaseFragment {
             case R.id.button_add:
                 mNavigator.startAddTaskActivity();
                 break;
+            case R.id.image_next:
+
+                break;
+            case R.id.image_previous:
+
+                break;
         }
     }
 
     @Override
     protected void initUI(View rootView) {
+        textTime = rootView.findViewById(R.id.text_time);
+
         mRecyclerViewTask = rootView.findViewById(R.id.recycler_task);
         mRecyclerViewTask.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerViewTask.addItemDecoration(
@@ -208,6 +244,12 @@ public class AllTaskFragment extends BaseFragment {
 
         mButtonAdd = rootView.findViewById(R.id.button_add);
         mButtonAdd.setOnClickListener(this);
+
+        imagePrevious = rootView.findViewById(R.id.image_previous);
+        imagePrevious.setOnClickListener(this);
+
+        imageNext = rootView.findViewById(R.id.image_next);
+        imageNext.setOnClickListener(this);
     }
 
     @Override

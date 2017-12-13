@@ -3,7 +3,6 @@ package toong.vn.bebetter.data.source.dao;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import io.reactivex.Maybe;
 import toong.vn.bebetter.data.model.TaskEntry;
 
 /**
@@ -24,8 +23,8 @@ public interface TaskEntryDao {
     void delete(String date, int taskId);
 
     @Query("SELECT MAX(progress) FROM taskEntry WHERE taskId=:taskId")
-    Maybe<Double> getBestProgressOf(int taskId);
+    double getBestProgressOf(int taskId);
 
     @Query("SELECT MAX(progress) FROM taskEntry WHERE taskId=:taskId and date=:yesterday")
-    Maybe<Double> getYesterdayProgressOf(int taskId, String yesterday);
+    double getYesterdayProgressOf(int taskId, String yesterday);
 }

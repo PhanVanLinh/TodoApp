@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import toong.vn.bebetter.R;
 import toong.vn.bebetter.data.model.TaskDisplay;
 import toong.vn.bebetter.util.base.BaseRecyclerViewAdapter;
@@ -43,7 +42,9 @@ public class TaskAdapter extends BaseRecyclerViewAdapter<TaskDisplay> {
             implements View.OnClickListener {
 
         private TextView tvTitle;
+        private TextView tvPreviousProgress;
         private TextView tvProgress;
+        private TextView tvBestProgress;
         private ImageView buttonAdd;
         private ImageView buttonMinus;
 
@@ -54,6 +55,8 @@ public class TaskAdapter extends BaseRecyclerViewAdapter<TaskDisplay> {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.text_title);
             tvProgress = itemView.findViewById(R.id.text_progress);
+            tvPreviousProgress = itemView.findViewById(R.id.text_previous_progress);
+            tvBestProgress = itemView.findViewById(R.id.text_best_progress);
             buttonAdd = itemView.findViewById(R.id.button_add);
             buttonMinus = itemView.findViewById(R.id.button_minus);
             mTaskListener = taskListener;
@@ -66,6 +69,8 @@ public class TaskAdapter extends BaseRecyclerViewAdapter<TaskDisplay> {
         void bind(TaskDisplay taskDisplay) {
             mTaskDisplay = taskDisplay;
             tvTitle.setText(taskDisplay.getTitle());
+            tvPreviousProgress.setText(String.valueOf(mTaskDisplay.getPreviousProgress()));
+            tvBestProgress.setText(String.valueOf(mTaskDisplay.getBestProgress()));
             bindProgress();
         }
 

@@ -11,7 +11,7 @@ public class TaskDisplay extends Task {
     private double progress;
 
     @Ignore
-    private double yesterdayProgress;
+    private double previousProgress;
 
     @Ignore
     private double bestProgress;
@@ -36,12 +36,12 @@ public class TaskDisplay extends Task {
         return "" + progress;
     }
 
-    public double getYesterdayProgress() {
-        return yesterdayProgress;
+    public double getPreviousProgress() {
+        return previousProgress;
     }
 
-    public void setYesterdayProgress(double yesterdayProgress) {
-        this.yesterdayProgress = yesterdayProgress;
+    public void setPreviousProgress(double previousProgress) {
+        this.previousProgress = previousProgress;
     }
 
     public double getBestProgress() {
